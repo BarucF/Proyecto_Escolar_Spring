@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calificaciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Calificar Alumnos</h1>
+        <form th:action="@{/profesor/calificar}" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>Materia</th>
+                        <th>Calificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <th:block th:each="alumno : ${alumnos}">
+                        <tr>
+                            <td th:text="${alumno.nombre}"></td>
+                            <td>
+                                <select name="materiaId">
+                                    <th:block th:each="materia : ${materias}">
+                                        <option th:value="${materia.id}" th:text="${materia.nombre}"></option>
+                                    </th:block>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" name="calificacion" step="0.1" min="0" max="10" required />
+                            </td>
+                            <td>
+                                <input type="hidden" name="alumnoId" th:value="${alumno.id}" />
+                            </td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+            <button type="submit">Guardar Calificaciones</button>
+            <a th:href="@{/login}" class="btn btn-danger" role="button">Salir</a>
+        </form>
+    </div>
+    
+</body>
+
+</html>

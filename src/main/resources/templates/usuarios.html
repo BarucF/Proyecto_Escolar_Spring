@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], input[type="email"], input[type="password"], select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .form-section {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gestionar Usuarios</h1>
+
+        <!-- Formulario para Crear Nuevo Alumno -->
+        <div class="form-section">
+            <h2>Crear Nuevo Alumno</h2>
+            <form action="/admin/usuarios/alumno" method="post">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required />
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+                <button type="submit">Crear Alumno</button>
+            </form>
+        </div>
+
+        <!-- Formulario para Crear Nuevo Profesor -->
+        <div class="form-section">
+            <h2>Crear Nuevo Profesor</h2>
+            <form action="/admin/usuarios/profesor" method="post">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required />
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+                <button type="submit">Crear Profesor</button>
+            </form>
+        </div>
+
+        <!-- Formulario para Asignar Profesor a Grupo sin Profesor -->
+        <div class="form-section">
+            <h2>Asignar Profesor a Grupo sin Profesor</h2>
+            <form action="/admin/asignar-profesor-a-grupo" method="post">
+                <div>
+                    <label for="profesorId">Selecciona Profesor:</label>
+                    <select id="profesorId" name="profesorId" required>
+                        <th:block th:each="profesor : ${profesores}">
+                            <option th:value="${profesor.id}" th:text="${profesor.nombre}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div>
+                    <label for="grupoId">Selecciona Grupo:</label>
+                    <select id="grupoId" name="grupoId" required>
+                        <th:block th:each="grupo : ${gruposSinProfesor}">
+                            <option th:value="${grupo.id}" th:text="${grupo.nombre}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <button type="submit">Asignar Profesor</button>
+            </form>
+        </div>
+
+        <!-- Formulario para Asignar Alumno a Grupo -->
+        <div class="form-section">
+            <h2>Asignar Alumno a Grupo</h2>
+            <form action="/admin/asignar-alumno-a-grupo" method="post">
+                <div>
+                    <label for="alumnoId">Selecciona Alumno:</label>
+                    <select id="alumnoId" name="alumnoId" required>
+                        <th:block th:each="alumno : ${alumnosNoAsignados}">
+                            <option th:value="${alumno.id}" th:text="${alumno.nombre}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div>
+                    <label for="grupoId">Selecciona Grupo:</label>
+                    <select id="grupoId" name="grupoId" required>
+                        <th:block th:each="grupo : ${grupos}">
+                            <option th:value="${grupo.id}" th:text="${grupo.nombre}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <button type="submit">Asignar Alumno</button>
+            </form>
+        </div>
+        <a th:href="@{/login}" class="btn btn-danger" role="button">Salir</a>
+    </div>
+</body>
+</html>

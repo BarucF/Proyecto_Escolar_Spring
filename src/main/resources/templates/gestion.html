@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+        table th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gestión de Materias y Grupos</h1>
+
+        <h2>Agregar Materia</h2>
+        <form action="/admin/gestion/materia" method="post">
+            <label for="nombreMateria">Nombre de la Materia:</label>
+            <input type="text" id="nombreMateria" name="nombre" required />
+            <button type="submit">Agregar Materia</button>
+        </form>
+
+        <h2>Agregar Grupo</h2>
+        <form action="/admin/gestion/grupo" method="post">
+            <label for="nombreGrupo">Nombre del Grupo:</label>
+            <input type="text" id="nombreGrupo" name="nombre" required />
+            <button type="submit">Agregar Grupo</button>
+        </form>
+
+        <h2>Cambiar Grupo de Alumno</h2>
+        <form action="/admin/gestion/cambiarGrupo" method="post">
+            <label for="alumno">Alumno:</label>
+            <select id="alumno" name="alumnoId">
+                <th:block th:each="alumno : ${alumnos}">
+                    <option th:value="${alumno.id}" th:text="${alumno.nombre}"></option>
+                </th:block>
+            </select>
+
+            <label for="nuevoGrupo">Nuevo Grupo:</label>
+            <select id="nuevoGrupo" name="nuevoGrupoId">
+                <th:block th:each="grupo : ${grupos}">
+                    <option th:value="${grupo.id}" th:text="${grupo.nombre}"></option>
+                </th:block>
+            </select>
+            <button type="submit">Cambiar Grupo</button>
+        </form>
+
+        <h2>Cambiar Profesor de Grupo</h2>
+        <form action="/admin/gestion/cambiarProfesor" method="post">
+            <label for="grupo">Grupo:</label>
+            <select id="grupo" name="grupoId">
+                <th:block th:each="grupo : ${grupos2}">
+                    <option th:value="${grupo.id}" th:text="${grupo.nombre}"></option>
+                </th:block>
+            </select>
+
+            <label for="nuevoProfesor">Nuevo Profesor:</label>
+            <select id="nuevoProfesor" name="nuevoProfesorId">
+                <th:block th:each="profesor : ${profesores}">
+                    <option th:value="${profesor.id}" th:text="${profesor.nombre}"></option>
+                </th:block>
+            </select>
+            
+            <button type="submit">Cambiar Profesor</button>
+        </form>
+
+        <h2>Lista de Materias</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre de la Materia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="materia : ${materias}">
+                    <tr>
+                        <td th:text="${materia.nombre}"></td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+
+        <h2>Lista de Grupos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre del Grupo</th>
+                    <th>Profesor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="grupo : ${grupos}">
+                    <tr>
+                        <td th:text="${grupo.nombre}"></td>
+                        <td th:text="${grupo.profesor != null ? grupo.profesor.nombre : 'Sin Profesor'}"></td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+        <a th:href="@{/login}" class="btn btn-danger" role="button">Salir</a>
+    </div>
+    
+
+</body>
+</html>

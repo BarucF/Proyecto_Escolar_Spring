@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Alumno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .alert {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+        table th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Bienvenido, <span th:text="${alumno.nombre}"></span></h1>
+
+        <h2>Mis Calificaciones</h2>
+
+        <div th:if="${mensaje}" class="alert">
+            <p th:text="${mensaje}"></p>
+        </div>
+
+        <table th:if="${calificaciones}">
+            <thead>
+                <tr>
+                    <th>Materia</th>
+                    <th>Calificación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="calificacion : ${calificaciones}">
+                    <tr>
+                        <td th:text="${calificacion.materia.nombre}"></td>
+                        <td th:text="${calificacion.calificacion}"></td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+        <a th:href="@{/login}" class="btn btn-danger" role="button">Salir</a>
+    </div>
+    
+</body>
+
+</html>

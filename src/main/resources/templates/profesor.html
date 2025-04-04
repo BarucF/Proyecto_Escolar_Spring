@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Profesor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            padding: 10px 15px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Bienvenido, <span th:text="${profesor.nombre}"></span></h1>
+
+        <h2>Grupos Asignados:</h2>
+        <ul>
+            <th:block th:each="grupo : ${grupos}">
+                <li>
+                    <a th:href="@{/profesor/calificaciones/{grupoId}(grupoId=${grupo.id})}">
+                        <p th:text="${grupo.nombre}"></p>
+                    </a>
+                </li>
+            </th:block>
+        </ul>
+        <a th:href="@{/login}" class="btn btn-danger" role="button">Salir</a>
+    </div>
+
+</body>
+
+</html>
