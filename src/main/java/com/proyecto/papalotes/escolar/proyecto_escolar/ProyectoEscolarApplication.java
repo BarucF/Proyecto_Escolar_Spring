@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ProyectoEscolarApplication {
 
+
+	//Cambio desde development
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoEscolarApplication.class, args);
 	}
